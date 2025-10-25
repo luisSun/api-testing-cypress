@@ -5,7 +5,7 @@ describe('Cadastro de Dispositivos', () => {
     const dataAtual = new Date().toISOString().slice(0, 10)
     const emptyData = {}
 
-    it.only('Cadastrar dispositivo com sucesso', () => {
+    it('Cadastrar dispositivo com sucesso', () => {
 
         cy.registerNewDevice(device).then((resposta_post) => {
 

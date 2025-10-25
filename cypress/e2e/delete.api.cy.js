@@ -43,7 +43,7 @@ describe('Teste DELETE', () => {
 
         const dispositivoFalso = 'santos'
 
-        cy.deleteDeviceId(newDevice).then((dispositivoFalso) => {
+        cy.deleteDeviceId(dispositivoFalso).then((fakeResponse) => {
 
             expect(fakeResponse.status).to.equal(404)
             expect(fakeResponse.body.error)
@@ -56,7 +56,7 @@ describe('Teste DELETE', () => {
 
         const protectedDevice = 3;
 
-        cy.deleteDeviceId(newDevice).then((protectedResp) => {
+        cy.deleteDeviceId(protectedDevice).then((protectedResp) => {
 
             //console.log(protectedResp)
             expect(protectedResp.status).to.equal(405)
