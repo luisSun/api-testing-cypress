@@ -152,11 +152,9 @@ CYPRESS_RECORD_KEY
 
 ## 📸 Relatórios
 
-Os relatórios HTML são gerados com o **Mochawesome Reporter** e podem ser encontrados em:
+Os relatórios HTML são gerados com o **Mochawesome Reporter** e enviados como artefatos
 
-```
-cypress/reports/html/
-```
+![Resultado](./images/api-testing-cypress-resuts.png)
 
 ---
 
