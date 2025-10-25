@@ -169,5 +169,3 @@ Os relatórios HTML são gerados com o **Mochawesome Reporter** e enviados como 
 ## 🧾 Licença
 
 Este projeto é de uso livre para fins educacionais, licenciado sob a **GNU GENERAL PUBLIC LICENSE v3.0**.
-
-```
