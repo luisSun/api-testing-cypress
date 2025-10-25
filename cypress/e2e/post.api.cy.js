@@ -1,49 +1,45 @@
 /// <reference types="cypress" />
-
+import { newDevices as device } from '../support/elemments/dataApi.js';
 describe('Cadastro de Dispositivos', () => {
 
+    const dataAtual = new Date().toISOString().slice(0, 10)
+    const emptyData = {}
 
-    const dataAtual = new Date().toISOString().slice(0,10)
-    const data = {
-        "name": "Celular de teste",
-        "data": {
-           "year": 2066,
-           "price": 49.99,
-           "CPU model": "Intel Rayzen",
-           "Hard disk size": "101010 TB"
-        }
-     }
+    it('Cadastrar dispositivo com sucesso', () => {
 
-  it('Cadastrar um dispositivo em especifico', () => {
+        cy.registerNewDevice(device).then((resposta_post) => {
 
-    cy.request({
-        method: 'POST',
-        url: "https://api.restful-api.dev/objects",
-        failOnStatusCode: false,
-        body: data
-    }).as('postDeviceResult')
+            expect(resposta_post.status).equal(200)
 
-    cy.get('@postDeviceResult').then((resposta) =>{
+            expect(resposta_post.body.id).not.empty
+            expect(resposta_post.body.createdAt).not.empty
 
-        console.log(resposta)
+            expect((resposta_post.body.createdAt.slice(0, 10))).equal(dataAtual)
 
-        expect(resposta.status).equal(200)
+            expect(resposta_post.body.name).equal(device.name)
 
-        expect(resposta.body.id).not.empty
-        expect(resposta.body.createdAt).not.empty
+            expect(resposta_post.body.data['CPU model']).equal(device.data['CPU model'])
+            expect(resposta_post.body.data['Hard disk size']).equal(device.data['Hard disk size'])
 
-        expect((resposta.body.createdAt.slice(0,10))).equal(dataAtual)
+            expect(resposta_post.body.data.year).equal(device.data.year)
+            expect(resposta_post.body.data.price).equal(device.data.price)
 
-        expect(resposta.body.name).equal(data.name)
+            console.log(`Id do Device editado: ${resposta_post.body.id}`)
 
-        expect(resposta.body.data['CPU model']).equal(data.data['CPU model'])
-        expect(resposta.body.data['Hard disk size']).equal(data.data['Hard disk size'])
+        })
 
-        expect(resposta.body.data.year).equal(data.data.year)
-        expect(resposta.body.data.price).equal(data.data.price)
 
+    });
+
+    it('Cadastrar sem passar body', () => {
+        cy.registerNewDevice(emptyData).then((post_blankDevice) => {
+            console.log(post_blankDevice)
+            expect(post_blankDevice.status).to.equal(400)
+            expect(post_blankDevice.body.name).to.not.be.null
+            expect(post_blankDevice.body.data).to.not.be.null
+
+            console.log('API aceitou cadastro sem body (bug conhecido)')
+        })
     })
 
-    
-    });
 });
